@@ -12,23 +12,30 @@
     <h1>NOSSO STOP</h1>
     <div class="points">
       <span>TOTAL:</span>
-      <p class="total-valor"></p>
+      <p class="total-valor">---</p>
     </div>
   </header>
   <main>
     <div class="container-inicial">
       <div class="name-container">
-        <label for="player-name">Nome do jogador:</label>
+        <label for="player-name">Jogador:</label>
         <input id="player-name" type="text" placeholder="Seu nome aqui" maxlength="50">
       </div>
       <div class="tema-container">
-        <input type="text" id="tema-input" placeholder="Digite uma classe" maxlength="50">
-        <button id="add-tema-btn">Adicionar</button>
+        <div class="tema-ad-container">
+          <input type="text" id="tema-input" placeholder="Digite um tema" maxlength="50" required>
+          <button id="add-tema-btn">Adicionar</button>
+        </div>
         <ul id="list-temas"></ul>
+        <button class="play">Começar</button>
       </div>
     </div>
-    <div class="game">
+    <div class="game hide">
       <div class="temas"></div>
+      <div class="ad-in-game">
+        <input type="text" id="ad-input" placeholder="adicionar tema" maxlength="50">
+        <button class="ad-button">Adicionar</button>
+      </div>
       <button class="stop">STOP</button>
       <button class="sum">Somar</button>
       <div class="turn">
