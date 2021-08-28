@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
 * {
   padding: 0;
   margin: 0;
@@ -5,7 +7,7 @@
 }
 
 body {
-  font-family: sans-serif;
+  font-family: "bebas neue", sans-serif;
   font-size: 12px;
   background-color: #ececec;
 }
@@ -15,40 +17,46 @@ header {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 30px;
+  height: 70px;
   background-color: #afafaf;
 }
 
 header h1 {
   margin-left: 10px;
-  font-size: 20px;
+  font-size: 5.8em;
+  letter-spacing: 0.09em;
   color: rgb(204, 18, 18);
+  height: 1em;
 }
 
 .points {
-  font-size: 15px;
+  font-size: 3em;
   margin-right: 10px;
   display: flex;
   align-self: center;
-  min-width: 90px;
-  justify-content: space-between;
+  min-width: 4.3em;
+  justify-content: space-around;
 }
 
 .name-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 10px 0 20px;
 }
 
 .name-container label {
-  font-size: 25px;
+  font-size: 2.5em;
 }
 
 .name-container input {
   font-size: 18px;
+  padding: 2px;
+  min-width: 15em;
   text-align: center;
   border: none;
+  margin-top: 8px;
+  border-radius: 50px;
 }
 
 .tema-container {
@@ -58,21 +66,47 @@ header h1 {
 }
 
 .tema-container ul {
-  min-height: 300px;
+  height: 27.5em;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 10px;
+}
+
+.tema-container ul li {
+  font-size: 1.8em;
 }
 
 .tema-ad-container {
   width: 100%;
   display: flex;
+  flex-direction: column;
 }
 
 .tema-ad-container input {
-  flex-grow: 1;
-  margin-right: 8px;
+  margin: 0 20px 8px;
+  font-size: 20px;
+  padding: 2px;
+  text-align: center;
+  border: none;
+  border-radius: 50px;
+}
+
+.tema-ad-container button {
+  height: 40px;
+  margin: 10px 60px 10px;
+  border-radius: 7px;
+  font-size: 20px;
 }
 
 .play {
   align-self: center;
+  font-size: 22px;
+  border-radius: 7px;
+  padding: 2px;
+  min-width: 8em;
+  min-height: 1.5em;
 }
 
 .hide {
