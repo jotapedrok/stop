@@ -9,7 +9,7 @@
 body {
   font-family: "bebas neue", sans-serif;
   font-size: 12px;
-  background-color: #ececec;
+  background-color: #acacac;
 }
 
 header {
@@ -115,31 +115,96 @@ header h1 {
 }
 
 .temas {
-  height: 40em;
+  height: 33em;
 }
 
 .temas ul {
   scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
   margin: 20px;
   list-style: none;
-  background-color: #333;
   overflow: auto;
   white-space: nowrap;
   display: flex;
 }
 
-.temas ul div li {
+.big-li {
   font-size: 40px;
-  color: white;
+  color: #003985e0;
   text-align: center;
   padding: 2px;
   text-decoration: none;
 }
 
+.small-li {
+  font-size: 30px;
+  text-align: center;
+  text-decoration: none;
+  list-style: none;
+  color: #000000;
+  line-height: 40px;
+}
+
 .temas ul div {
   scroll-snap-align: center;
   min-width: 100%;
-  height: 37em;
+  height: 30em;
+}
+
+.buttons-game {
+  align-self: center;
+  display: flex;
+  min-width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  margin: 5px 0 20px;
+}
+
+.stop {
+  color: rgb(196, 0, 0);
+  padding: 5px;
+  width: 4em;
+  font-family: "bebas neue";
+  letter-spacing: 0.8px;
+  font-size: 2em;
+}
+
+.sum {
+  width: 4em;
+  padding: 5px;
+  font-family: "bebas neue";
+  letter-spacing: 0.8px;
+  font-size: 2em;
+}
+
+.ad-in-game {
+  display: flex;
+  flex-direction: column;
+}
+
+#ad-input {
+  font-size: 1.5em;
+  text-align: center;
+  border: none;
+  margin: 0 20px 10px;
+  border-radius: 50px;
+}
+
+.ad-button {
+  align-self: center;
+  padding: 3px;
+  font-size: 20px;
+  font-family: "bebas neue";
+}
+
+.turn {
+  margin: 10px 10px 30px;
+}
+
+.turn p {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
 }
 
 .hide {
