@@ -89,6 +89,9 @@ const sum = () => {
       result = parseInt(result) + parseInt(valor);
       const pPoint = document.createElement('p');
       pPoint.className = 'point-in-p'
+      if (valor === 0) {
+        pPoint.classList.add('zero');
+      }
       pPoint.innerHTML = valor;
       selectPoints[i].parentNode.appendChild(pPoint);
       selectPoints[i].parentNode.removeChild(selectPoints[i]);
