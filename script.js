@@ -81,18 +81,26 @@ let result = 0;
 
 const sum = () => {
   const selectPoints = document.querySelectorAll('.select-play');
-  const total = document.querySelector('.total-valor');
-  for (let i = 0; i < selectPoints.length; i += 1) {
-    const valor = selectPoints[i].value;
-    result = parseInt(result) + parseInt(valor);
-    const pPoint = document.createElement('p');
-    pPoint.className = 'point-in-p'
-    pPoint.innerHTML = valor;
-    selectPoints[i].parentNode.appendChild(pPoint);
-    selectPoints[i].parentNode.removeChild(selectPoints[i]);
+  if (selectPoints.length > 0) {
+    const total = document.querySelector('.total-valor');
+    let turnPoint = 0;
+    for (let i = 0; i < selectPoints.length; i += 1) {
+      const valor = selectPoints[i].value;
+      result = parseInt(result) + parseInt(valor);
+      const pPoint = document.createElement('p');
+      pPoint.className = 'point-in-p'
+      pPoint.innerHTML = valor;
+      selectPoints[i].parentNode.appendChild(pPoint);
+      selectPoints[i].parentNode.removeChild(selectPoints[i]);
+      turnPoint = (turnPoint + parseInt(valor));
+    }
+    const olTurns = document.querySelector('.turn-points');
+    const liTurn = document.createElement('li');
+    liTurn.innerText = turnPoint;
+    olTurns.appendChild(liTurn);
+    total.innerText = result;
+    result = total.innerText;
   }
-  total.innerText = result;
-  result = total.innerText;
 }
 
 const sumBtn = document.querySelector('.sum');

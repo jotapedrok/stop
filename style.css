@@ -272,3 +272,16 @@ header h1 {
   margin-left: 10px;
   justify-self: flex-end;
 }
+
+.point-in-p {
+  color: rgb(46, 141, 89);
+  text-align: center;
+  font-size: 30px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.zero {
+  color: rgb(196, 0, 0);
+  text-decoration: line-through;
+}
