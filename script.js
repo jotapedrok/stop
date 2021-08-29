@@ -3,10 +3,12 @@ const listTheme = document.querySelector('#list-temas');
 const playerName = document.querySelector('#player-name');
 
 const initialAdd = () => {
-  const theme = document.createElement('li');
-  theme.innerText = inputTheme.value;
-  listTheme.appendChild(theme);
-  inputTheme.value = '';
+  if (inputTheme.value !== '') {
+    const theme = document.createElement('li');
+    theme.innerText = inputTheme.value;
+    listTheme.appendChild(theme);
+    inputTheme.value = '';
+  }
 }
 const addBtn = document.querySelector('#add-tema-btn');
 addBtn.addEventListener('click', initialAdd);
@@ -55,18 +57,43 @@ const stop = () => {
     option0.innerHTML = '0';
     option5.innerHTML = '5';
     option10.innerHTML = '10';
-    select.appendChild(option0);
-    select.appendChild(option5);
-    select.appendChild(option10);
     select.className = 'select-play';
     smallLi.className = 'small-li';
     smallLi.innerHTML = inputPlay[i].value;
+    if (smallLi.innerHTML === "") {
+      select.appendChild(option0);
+    } else {
+      select.appendChild(option0);
+      select.appendChild(option5);
+      select.appendChild(option10);
+    }
     smallLi.appendChild(select);
     div.appendChild(smallLi);
     div.appendChild(select);
     bigLi[i].appendChild(div);
+    inputPlay[i].value = '';
   }
 }
 
 const stopBtn = document.querySelector('.stop');
 stopBtn.addEventListener('click', stop);
+let result = 0;
+
+const sum = () => {
+  const selectPoints = document.querySelectorAll('.select-play');
+  const total = document.querySelector('.total-valor');
+  for (let i = 0; i < selectPoints.length; i += 1) {
+    const valor = selectPoints[i].value;
+    result = parseInt(result) + parseInt(valor);
+    const pPoint = document.createElement('p');
+    pPoint.className = 'point-in-p'
+    pPoint.innerHTML = valor;
+    selectPoints[i].parentNode.appendChild(pPoint);
+    selectPoints[i].parentNode.removeChild(selectPoints[i]);
+  }
+  total.innerText = result;
+  result = total.innerText;
+}
+
+const sumBtn = document.querySelector('.sum');
+sumBtn.addEventListener('click', sum);
