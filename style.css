@@ -109,6 +109,41 @@ header h1 {
   min-height: 1.5em;
 }
 
+.game {
+  display: flex;
+  flex-direction: column;
+}
+
+.temas {
+  min-height: 40em;
+}
+
+.temas ul {
+  margin: 20px;
+  list-style: none;
+  background-color: #333;
+  overflow: auto;
+  white-space: nowrap;
+  display: flex;
+}
+
+.temas ul div li {
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  padding: 2px;
+  text-decoration: none;
+}
+
+.mandatory-scroll-snapping > div {
+  scroll-snap-stop: always;
+}
+
+.temas ul div {
+  scroll-snap-stop: always;
+  min-width: 100%;
+}
+
 .hide {
   display: none;
 }
