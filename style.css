@@ -285,3 +285,23 @@ header h1 {
   color: rgb(196, 0, 0);
   text-decoration: line-through;
 }
+
+img {
+  width: 30px;
+}
+
+.delete {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  left: 310px;
+  top: 218px;
+}
+
+.hide-selected {
+  display: none;
+}
+
+.selected {
+  background-color: rgb(141, 141, 141);
+}

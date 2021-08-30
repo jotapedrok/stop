@@ -14,6 +14,26 @@ const addBtn = document.querySelector('#add-tema-btn');
 addBtn.addEventListener('click', initialAdd);
 const ulTemas = document.querySelector('.ul-temas');
 
+// const selected = document.querySelector('.selected');
+const ul = document.querySelector('#list-temas');
+const select = (event) => {
+  if (!event.target.classList.contains('selected')) {
+  for (let i = 0; i < ul.children.length; i += 1) {
+    ul.children[i].classList.remove('selected');
+  }
+    event.target.classList.add('selected');
+  } else {
+    event.target.classList.remove('selected');
+  }
+}
+
+const afterAdd = () => {
+const li = document.querySelector('#list-temas').lastChild;
+li.addEventListener('click', select);
+};
+
+addBtn.addEventListener('click', afterAdd);
+
 const createThemes = () => {
   for (let i = 0; i < listTheme.children.length; i += 1) {
     const ulDiv = document.createElement('div');
