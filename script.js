@@ -14,7 +14,6 @@ const addBtn = document.querySelector('#add-tema-btn');
 addBtn.addEventListener('click', initialAdd);
 const ulTemas = document.querySelector('.ul-temas');
 
-// const selected = document.querySelector('.selected');
 const ul = document.querySelector('#list-temas');
 const select = (event) => {
   if (!event.target.classList.contains('selected')) {
@@ -32,7 +31,27 @@ const li = document.querySelector('#list-temas').lastChild;
 li.addEventListener('click', select);
 };
 
+const deleteIcon = document.querySelector('.delete');
+const showDelete = () => {
+  if (document.querySelectorAll('.selected').length > 0) {
+    deleteIcon.classList.remove('hide-selected');
+  } else {
+    deleteIcon.classList.add('hide-selected');
+  }
+}
+
+const listTemasIncial = document.querySelector('#list-temas')
+
 addBtn.addEventListener('click', afterAdd);
+listTemasIncial.addEventListener('click', showDelete);
+
+const deleteItem =() => {
+  const selected = document.querySelector('.selected');
+  selected.parentNode.removeChild(selected);
+  deleteIcon.classList.add('hide-selected');
+}
+
+deleteIcon.addEventListener('click', deleteItem);
 
 const createThemes = () => {
   for (let i = 0; i < listTheme.children.length; i += 1) {
