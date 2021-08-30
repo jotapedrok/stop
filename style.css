@@ -131,7 +131,7 @@ header h1 {
 
 .temas ul {
   scroll-snap-type: x mandatory;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
   margin: 0px 20px 20px;
   list-style: none;
   overflow: auto;
