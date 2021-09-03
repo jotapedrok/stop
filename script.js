@@ -53,6 +53,7 @@ const deleteItem =() => {
 
 deleteIcon.addEventListener('click', deleteItem);
 
+const turn = document.querySelector('.turn');
 const createThemes = () => {
   for (let i = 0; i < listTheme.children.length; i += 1) {
     const ulDiv = document.createElement('div');
@@ -64,17 +65,20 @@ const createThemes = () => {
     bigLi.appendChild(inputPlay);
     ulDiv.appendChild(bigLi);
     ulTemas.appendChild(ulDiv);
+    ulTemas.appendChild(turn);
   }
 }
 
 const toStart = () => {
   const inicial = document.querySelector('.container-inicial');
   const inGame = document.querySelector('.game');
+  const points = document.querySelector('.points')
   const nameGame = document.querySelector('.name-player');
 
   if (playerName.value !== '' && listTheme.childElementCount > 0) {
     inicial.classList.add('hide');
     inGame.classList.remove('hide');
+    points.classList.remove('dont-show');
     nameGame.innerText = playerName.value;
     createThemes();
   }

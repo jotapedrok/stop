@@ -15,14 +15,19 @@ body {
 header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
   height: 70px;
   background-color: #afafaf;
 }
 
+input:focus {
+  outline: none;
+  border: 1px solid rgb(180, 180, 180);
+}
+
 header h1 {
-  margin-left: 10px;
+  /* margin-left: 10px; */
   font-size: 5.8em;
   letter-spacing: 0.09em;
   color: rgb(204, 18, 18);
@@ -31,11 +36,15 @@ header h1 {
 
 .points {
   font-size: 3em;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   display: flex;
   align-self: center;
-  min-width: 4.3em;
+  min-width: 57px;
   justify-content: space-around;
+}
+
+.menu-header {
+  min-width: 57px;
 }
 
 .name-container {
@@ -66,7 +75,7 @@ header h1 {
 }
 
 .tema-container ul {
-  height: 50vh;
+  height: 45vh;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -227,22 +236,33 @@ header h1 {
 }
 
 .turn {
-  margin: 15px 10px 30px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  order: 500;
 }
 
 .turn p {
+  margin-bottom: 5px;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   font-size: 30px;
   text-transform: uppercase;
 }
 
 .turn-points {
-  font-size: 2em;
-  margin-left: 25px;
+  list-style: none;
+  font-size: 2.8em;
+  font-weight: bold;
+  color: rgb(0, 50, 126);
 }
 
 .hide {
   display: none;
+}
+
+.dont-show {
+  visibility: hidden;
 }
 
 .big-li {
@@ -304,4 +324,21 @@ img {
 
 .selected {
   background-color: rgb(141, 141, 141);
+}
+
+.horizontal-line {
+  background-color: black;
+  height: 1px;
+  width: 100%;
+}
+
+footer {
+  margin-top: 70px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  font: 0.8em sans-serif;
 }
