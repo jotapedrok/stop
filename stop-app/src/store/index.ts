@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import exemple from './exemple.store';
+import ScoreReducer from './score.slice';
 
 const store = configureStore({
   reducer: {
-    exemple: exemple
-  }
+    score: ScoreReducer,
+  },
 });
 
-export type RootState = ReturnType<typeof store.getState>
-export default store
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export default store;
