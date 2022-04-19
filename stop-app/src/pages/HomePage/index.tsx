@@ -1,62 +1,89 @@
-import React, { ChangeEventHandler, Component } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
-import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 import { FaUserAlt } from 'react-icons/fa';
+import { BiXCircle } from 'react-icons/bi';
+import { useDispatch } from 'react-redux';
+import ITheme from '../../interfaces/ITheme.interface';
+import { setThemes } from '../../store/themes.slice';
 import './style.scss';
-
-type MyProps = {
-  y: number;
-};
+import { setUserName } from '../../store/user.slice';
 
 type MyState = {
-  themes: string[];
+  themes: ITheme[];
   themeInput: string;
+  usernameInput: string;
   hasError: {
     username: boolean;
+    themeInput: boolean;
     themes: boolean;
   };
 };
 
-export default class HomePage extends Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props);
-    this.state = {
-      themes: [],
-      themeInput: '',
-      hasError: {
-        username: false,
-        themes: false,
-      },
-    };
-  }
+export default function HomePage() {
+  const initialState: MyState = {
+    themes: [],
+    themeInput: '',
+    usernameInput: '',
+    hasError: {
+      username: false,
+      themeInput: false,
+      themes: false,
+    },
+  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  render() {
-    const { y } = this.props;
-    const { themes, themeInput, hasError } = this.state;
-    return (
-      <div className="home-page container">
-        <div className="home-page-name-content container mt-5">
+  const [state, setState] = useState(initialState);
+  const { hasError, usernameInput, themeInput, themes } = state;
+  return (
+    <div className="home-page container">
+      <section className="home-page-section-up">
+        <div className="home-page-section-up-name-content container mt-5">
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">
               <FaUserAlt />
             </InputGroup.Text>
             <FormControl
+              isInvalid={hasError.username}
+              value={usernameInput}
               placeholder="Username"
               aria-label="Username"
               aria-describedby="basic-addon1"
+              onChange={e => {
+                if (e.target.value === '') {
+                  setState({
+                    ...state,
+                    usernameInput: e.target.value,
+                    hasError: {
+                      ...hasError,
+                      username: true,
+                    },
+                  });
+                } else {
+                  setState({
+                    ...state,
+                    usernameInput: e.target.value,
+                    hasError: {
+                      ...hasError,
+                      username: false,
+                    },
+                  });
+                }
+              }}
             />
           </InputGroup>
         </div>
-        <div className="home-page-themes-content container">
+        <div className="home-page-section-up-themes-content container">
           <InputGroup className="mb-3" hasValidation>
             <FormControl
-              isInvalid={hasError.themes}
+              isInvalid={hasError.themeInput}
               placeholder="Themes"
               aria-label="Themes"
               aria-describedby="basic-addon1"
               value={themeInput}
               onChange={e => {
-                this.setState({ themeInput: e.target.value });
+                setState({ ...state, themeInput: e.target.value });
               }}
             />
           </InputGroup>
@@ -68,35 +95,72 @@ export default class HomePage extends Component<MyProps, MyState> {
             size="lg"
             onClick={e => {
               if (themeInput === '') {
-                this.setState({
+                setState({
+                  ...state,
                   hasError: {
                     ...hasError,
-                    themes: true,
+                    themeInput: true,
                   },
                 });
               } else {
                 e.preventDefault();
-                this.setState({
+                setState({
+                  ...state,
                   hasError: {
                     ...hasError,
-                    themes: false,
+                    themeInput: false,
                   },
+                  themes: [
+                    ...themes,
+                    { id: themes.length + 1, theme: themeInput },
+                  ],
+                  themeInput: '',
                 });
-                this.setState(prevState => {
-                  const newThemes = [...prevState.themes, themeInput];
-                  return { themes: newThemes };
-                });
-                this.setState({ themeInput: '' });
               }
             }}
           >
-            Add
+            Add Theme
           </Button>
-          <div className="home-page-themes-content-list container">
-            {themes && themes.map(e => <h6 key={`theme_${e}`}>{e}</h6>)}
+          <div className="home-page-section-up-themes-content-list container">
+            {themes &&
+              themes.map(e => (
+                <div
+                  key={`theme_${e.id}`}
+                  className="home-page-section-up-themes-content-list-item"
+                >
+                  <h6>{e.theme}</h6>
+                  <button
+                    className="home-page-section-up-themes-content-list-item-button"
+                    type="button"
+                    onClick={() => {
+                      const newThemes = themes.filter(
+                        theme => theme.id !== e.id,
+                      );
+                      setState({ ...state, themes: newThemes });
+                    }}
+                  >
+                    <BiXCircle />
+                  </button>
+                </div>
+              ))}
           </div>
         </div>
-      </div>
-    );
-  }
+      </section>
+      <section className="home-page-section-down container d-grid gap-2">
+        <Button
+          disabled={usernameInput === '' || themes.length === 0}
+          variant="secondary"
+          size="lg"
+          onClick={e => {
+            e.preventDefault();
+            dispatch(setThemes(themes));
+            dispatch(setUserName(usernameInput));
+            navigate('/testando');
+          }}
+        >
+          Play
+        </Button>
+      </section>
+    </div>
+  );
 }

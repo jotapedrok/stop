@@ -9,7 +9,8 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<HomePage y={1} />} />
+        <Route path="/testando" element={<h1>OPS... PAGE NOT FOUND!</h1>} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </div>
   );
