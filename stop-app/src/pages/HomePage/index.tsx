@@ -4,38 +4,38 @@ import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { FaUserAlt } from 'react-icons/fa';
 import { BiXCircle } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
-import ITheme from '../../interfaces/ITheme.interface';
-import { setThemes } from '../../store/themes.slice';
+import ICategory from '../../interfaces/ICategory.interface';
+import { setCategories } from '../../store/category.slice';
 import './style.scss';
 import { setUserName } from '../../store/user.slice';
 
 type MyState = {
-  themes: ITheme[];
-  themeInput: string;
+  categories: ICategory[];
+  categoryInput: string;
   usernameInput: string;
   hasError: {
     username: boolean;
-    themeInput: boolean;
-    themes: boolean;
+    categoryInput: boolean;
+    categories: boolean;
   };
 };
 
 export default function HomePage() {
   const initialState: MyState = {
-    themes: [],
-    themeInput: '',
+    categories: [],
+    categoryInput: '',
     usernameInput: '',
     hasError: {
       username: false,
-      themeInput: false,
-      themes: false,
+      categoryInput: false,
+      categories: false,
     },
   };
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [state, setState] = useState(initialState);
-  const { hasError, usernameInput, themeInput, themes } = state;
+  const { hasError, usernameInput, categoryInput, categories } = state;
   return (
     <div className="home-page container">
       <section className="home-page-section-up">
@@ -74,16 +74,16 @@ export default function HomePage() {
             />
           </InputGroup>
         </div>
-        <div className="home-page-section-up-themes-content container">
+        <div className="home-page-section-up-categories-content container">
           <InputGroup className="mb-3" hasValidation>
             <FormControl
-              isInvalid={hasError.themeInput}
-              placeholder="Themes"
-              aria-label="Themes"
+              isInvalid={hasError.categoryInput}
+              placeholder="Categories"
+              aria-label="Categories"
               aria-describedby="basic-addon1"
-              value={themeInput}
+              value={categoryInput}
               onChange={e => {
-                setState({ ...state, themeInput: e.target.value });
+                setState({ ...state, categoryInput: e.target.value });
               }}
             />
           </InputGroup>
@@ -94,12 +94,12 @@ export default function HomePage() {
             variant="primary"
             size="lg"
             onClick={e => {
-              if (themeInput === '') {
+              if (categoryInput === '') {
                 setState({
                   ...state,
                   hasError: {
                     ...hasError,
-                    themeInput: true,
+                    categoryInput: true,
                   },
                 });
               } else {
@@ -108,35 +108,35 @@ export default function HomePage() {
                   ...state,
                   hasError: {
                     ...hasError,
-                    themeInput: false,
+                    categoryInput: false,
                   },
-                  themes: [
-                    ...themes,
-                    { id: themes.length + 1, theme: themeInput },
+                  categories: [
+                    ...categories,
+                    { id: categories.length + 1, category: categoryInput },
                   ],
-                  themeInput: '',
+                  categoryInput: '',
                 });
               }
             }}
           >
-            Add Theme
+            Add Category
           </Button>
-          <div className="home-page-section-up-themes-content-list container">
-            {themes &&
-              themes.map(e => (
+          <div className="home-page-section-up-categories-content-list container">
+            {categories &&
+              categories.map(e => (
                 <div
-                  key={`theme_${e.id}`}
-                  className="home-page-section-up-themes-content-list-item"
+                  key={`category_${e.id}`}
+                  className="home-page-section-up-categories-content-list-item"
                 >
-                  <h6>{e.theme}</h6>
+                  <h6>{e.category}</h6>
                   <button
-                    className="home-page-section-up-themes-content-list-item-button"
+                    className="home-page-section-up-categories-content-list-item-button"
                     type="button"
                     onClick={() => {
-                      const newThemes = themes.filter(
-                        theme => theme.id !== e.id,
+                      const newCategories = categories.filter(
+                        category => category.id !== e.id,
                       );
-                      setState({ ...state, themes: newThemes });
+                      setState({ ...state, categories: newCategories });
                     }}
                   >
                     <BiXCircle />
@@ -148,14 +148,14 @@ export default function HomePage() {
       </section>
       <section className="home-page-section-down container d-grid gap-2">
         <Button
-          disabled={usernameInput === '' || themes.length === 0}
+          disabled={usernameInput === '' || categories.length === 0}
           variant="secondary"
           size="lg"
           onClick={e => {
             e.preventDefault();
-            dispatch(setThemes(themes));
+            dispatch(setCategories(categories));
             dispatch(setUserName(usernameInput));
-            navigate('/testando');
+            navigate('/game');
           }}
         >
           Play

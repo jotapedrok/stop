@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import ScoreReducer from './score.slice';
-import ThemesReducer from './themes.slice';
+import ThemesReducer from './category.slice';
 import UserReducer from './user.slice';
 
 const store = configureStore({
   reducer: {
     score: ScoreReducer,
-    themes: ThemesReducer,
+    categories: ThemesReducer,
     user: UserReducer,
   },
 });
