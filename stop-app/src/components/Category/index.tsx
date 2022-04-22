@@ -68,48 +68,52 @@ export default function Category(props: CategoryProps) {
       <div className="category-title">
         <h4>{category.category}</h4>
       </div>
-      <div className="category-answer-list">
-        {answerList.map(({ answer, score }) => (
-          <div
-            key={`${answer}_key_number_${Math.random() * 100}`}
-            className="category-answer-list-item "
-          >
-            <h5 className="category-answer-list-item-answer">{answer}</h5>
-            <h5 className={
-              `category-answer-list-item-score ${Number(score) === 0 ? 'zero' : ''}`
-            }>{score}</h5>
+      <div className="category-scrolling-box">
+
+        <div className="category-answer-list">
+          {answerList.map(({ answer, score }) => (
+            <div
+              key={`${answer}_key_number_${Math.random() * 100}`}
+              className="category-answer-list-item "
+            >
+              <h5 className="category-answer-list-item-answer">{answer}</h5>
+              <h5 className={
+                `category-answer-list-item-score ${Number(score) === 0 ? 'zero' : ''}`
+              }>{score}</h5>
+            </div>
+          ))}
+        </div>
+        {turn === 'stop' && (
+          <div className="category-answer-unseted-points">
+            {answerBeforePoints.length > 0 && <h4>{answerBeforePoints}</h4>}
+            <Form.Select
+              className='category-answer-unseted-points-select'
+              name="setedPoints"
+              size="sm"
+              value={setedPoints}
+              onChange={handleSelect}
+            >
+              <option value={0}>0</option>
+              {answerBeforePoints.length > 0 && <option value={5}>5</option>}
+              {answerBeforePoints.length > 0 && <option value={10}>10</option>}
+            </Form.Select>
           </div>
-        ))}
+        )}
+        {turn !== 'stop' && (
+          <div className="category-input-container container">
+            <InputGroup className="mb-3">
+              <FormControl
+                value={answerInput}
+                name="answerInput"
+                placeholder="Answer"
+                aria-label="Answer"
+                aria-describedby="basic-addon1"
+                onChange={handleChange}
+              />
+            </InputGroup>
+          </div>
+        )}
       </div>
-      {turn === 'stop' && (
-        <div className="category-answer-unseted-points">
-          <h4>{answerBeforePoints}</h4>
-          <Form.Select
-            name="setedPoints"
-            size="sm"
-            value={setedPoints}
-            onChange={handleSelect}
-          >
-            <option value={0}>0</option>
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-          </Form.Select>
-        </div>
-      )}
-      {turn !== 'stop' && (
-        <div className="category-input-container container">
-          <InputGroup className="mb-3">
-            <FormControl
-              value={answerInput}
-              name="answerInput"
-              placeholder="Answer"
-              aria-label="Answer"
-              aria-describedby="basic-addon1"
-              onChange={handleChange}
-            />
-          </InputGroup>
-        </div>
-      )}
     </div>
   );
 }

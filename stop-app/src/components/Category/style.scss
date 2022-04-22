@@ -3,9 +3,15 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  max-width: 85%;
+  max-width: 75%;
   margin: 0 auto;
-  min-height: 20rem;
+
+  &-scrolling-box {
+    width: 100%;
+    height: 20rem;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+  }
 
   &-title {
     h4 {
@@ -51,8 +57,13 @@
 
   &-answer-unseted-points {
     display: flex;
+    justify-content: center;
+    align-items: center;
     h4 {
       margin-right: 1rem;
+    }
+    &-select {
+      width: 4rem;
     }
   }
 }
