@@ -5,6 +5,7 @@ import IAnswer from '../../interfaces/IAnswer.interface';
 import ICategory from '../../interfaces/ICategory.interface';
 import { RootState } from '../../store';
 import { setAnswers } from '../../store/answers.slice';
+import './style.scss';
 
 interface CategoryProps {
   category: ICategory;
@@ -71,10 +72,12 @@ export default function Category(props: CategoryProps) {
         {answerList.map(({ answer, score }) => (
           <div
             key={`${answer}_key_number_${Math.random() * 100}`}
-            className="category-answer-list-item"
+            className="category-answer-list-item "
           >
             <h5 className="category-answer-list-item-answer">{answer}</h5>
-            <h5 className="category-answer-list-item-score">{score}</h5>
+            <h5 className={
+              `category-answer-list-item-score ${Number(score) === 0 ? 'zero' : ''}`
+            }>{score}</h5>
           </div>
         ))}
       </div>
@@ -93,18 +96,20 @@ export default function Category(props: CategoryProps) {
           </Form.Select>
         </div>
       )}
-      {turn !== 'stop' && (<div className="category-input-container container">
-        <InputGroup className="mb-3">
-          <FormControl
-            value={answerInput}
-            name="answerInput"
-            placeholder="Answer"
-            aria-label="Answer"
-            aria-describedby="basic-addon1"
-            onChange={handleChange}
-          />
-        </InputGroup>
-      </div>)}
+      {turn !== 'stop' && (
+        <div className="category-input-container container">
+          <InputGroup className="mb-3">
+            <FormControl
+              value={answerInput}
+              name="answerInput"
+              placeholder="Answer"
+              aria-label="Answer"
+              aria-describedby="basic-addon1"
+              onChange={handleChange}
+            />
+          </InputGroup>
+        </div>
+      )}
     </div>
   );
 }
