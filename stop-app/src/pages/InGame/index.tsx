@@ -3,11 +3,13 @@ import { Button, Carousel, FormControl, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Category from '../../components/Category';
 import { RootState } from '../../store';
-import { setDefault, setStop, setSum } from '../../store/turn.slice';
+import { addCategory } from '../../store/category.slice';
+import { setStop, setSum } from '../../store/turn.slice';
 
 export default function InGame() {
   const [state, setState] = useState({
     index: 0,
+    addCategoryInput: '',
   });
 
   const userName = useSelector((s: RootState) => s.user.userName);
@@ -31,6 +33,20 @@ export default function InGame() {
   const sumButtomClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setSum());
+  };
+
+  const addCategoryButtomClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(
+      addCategory({
+        category: state.addCategoryInput,
+        id: categories.length + 1,
+      }),
+    );
+    setState({
+      ...state,
+      addCategoryInput: '',
+    });
   };
 
   return (
@@ -71,7 +87,7 @@ export default function InGame() {
             aria-describedby="basic-addon1"
           />
         </InputGroup>
-        <Button variant="primary" size="sm">
+        <Button onClick={addCategoryButtomClick} variant="primary" size="sm">
           Add Category
         </Button>
       </div>
