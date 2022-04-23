@@ -3,6 +3,7 @@ import ScoreReducer from './score.slice';
 import ThemesReducer from './category.slice';
 import UserReducer from './user.slice';
 import TurnReducer from './turn.slice';
+import AnswerReducer from './answers.slice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     categories: ThemesReducer,
     user: UserReducer,
     turn: TurnReducer,
+    answers: AnswerReducer,
   },
 });
 

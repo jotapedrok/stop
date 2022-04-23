@@ -112,7 +112,11 @@ export default function HomePage() {
                   },
                   categories: [
                     ...categories,
-                    { id: categories.length + 1, category: categoryInput },
+                    {
+                      id: categories.length + 1,
+                      category: categoryInput,
+                      answers: [],
+                    },
                   ],
                   categoryInput: '',
                 });

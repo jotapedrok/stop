@@ -1,10 +1,12 @@
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { Button, Carousel, FormControl, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Category from '../../components/Category';
 import { RootState } from '../../store';
-import { addCategory } from '../../store/category.slice';
-import { setStop, setSum } from '../../store/turn.slice';
+import { addAnswers, addCategory } from '../../store/category.slice';
+import { sendTurnResposts, setStop, setSum } from '../../store/turn.slice';
+import { increment } from '../../store/score.slice';
 import './style.scss';
 
 export default function InGame() {
@@ -15,9 +17,16 @@ export default function InGame() {
 
   const userName = useSelector((s: RootState) => s.user.userName);
   const categories = useSelector((s: RootState) => s.categories.categories);
-  const turn = useSelector((s: RootState) => s.turn.turn);
+  const { actualTurn, turnType, turns } = useSelector((s: RootState) => s.turn);
 
   const dispatch = useDispatch();
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    if (userName.length < 1 || categories.length < 1) {
+      navigation('/');
+    }
+  }, []);
 
   const handleCarouselSelect = (selectedIndex: number) => {
     setState({
@@ -34,6 +43,27 @@ export default function InGame() {
   const sumButtomClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setSum());
+    dispatch(sendTurnResposts());
+    const scores = actualTurn.answers.reduce(
+      (acc, answer) => Number(answer.score) + acc,
+      0,
+    );
+    dispatch(increment(Number(scores)));
+    actualTurn.answers.forEach(answer => {
+      dispatch(addAnswers(answer));
+    });
+  };
+
+  const calculateTurns = () => {
+    const numberOfTurns = turns.length;
+    const result = [];
+    for (let i = numberOfTurns; i >= 1; i -= 1) {
+      result.push({
+        score: 0,
+        answer: '',
+      });
+    }
+    return result;
   };
 
   const addCategoryButtomClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -42,6 +72,7 @@ export default function InGame() {
       addCategory({
         category: state.addCategoryInput,
         id: categories.length + 1,
+        answers: calculateTurns(),
       }),
     );
     setState({
@@ -77,12 +108,12 @@ export default function InGame() {
         ))}
       </Carousel>
       <div className="in-game-buttons-container container">
-        {turn !== 'stop' && (
+        {turnType !== 'stop' && (
           <Button onClick={stopButtomClick} variant="primary" size="lg">
             Stop
           </Button>
         )}
-        {turn === 'stop' && (
+        {turnType === 'stop' && (
           <Button onClick={sumButtomClick} variant="primary" size="lg">
             Sum
           </Button>
@@ -100,7 +131,12 @@ export default function InGame() {
             size="sm"
           />
         </InputGroup>
-        <Button onClick={addCategoryButtomClick} variant="primary" size="sm">
+        <Button
+          disabled={!state.addCategoryInput.length}
+          onClick={addCategoryButtomClick}
+          variant="primary"
+          size="sm"
+        >
           Add Category
         </Button>
       </div>

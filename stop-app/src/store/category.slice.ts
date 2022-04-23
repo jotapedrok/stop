@@ -16,15 +16,34 @@ const category = createSlice({
     },
 
     addCategory(state, { payload }) {
-      const newCategory = [...state.categories, payload];
-      state.categories = newCategory;
+      const found = state.categories.find(
+        selectedCategory =>
+          selectedCategory.category === payload.category.category,
+      );
+      if (!found) {
+        const newCategory = [...state.categories, payload];
+        console.log('newCategory', newCategory);
+        state.categories = newCategory;
+      }
     },
 
     reset(state) {
       state.categories = [];
     },
+
+    addAnswers(state, { payload }) {
+      const { category: payloadCategory, answer, score } = payload;
+      const found = state.categories.find(
+        selectedCategory => selectedCategory.category === payloadCategory,
+      );
+      if (found) {
+        const i = state.categories.indexOf(found);
+        state.categories[i].answers.push({ score, answer });
+      }
+    },
   },
 });
 
 export default category.reducer;
-export const { setCategories, reset, addCategory } = category.actions;
+export const { setCategories, reset, addCategory, addAnswers } =
+  category.actions;

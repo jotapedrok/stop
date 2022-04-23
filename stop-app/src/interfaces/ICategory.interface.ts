@@ -1,4 +1,7 @@
+import IAnswer from './IAnswer.interface';
+
 export default interface ICategory {
-  id: number;
+  id?: number;
   category: string;
+  answers: IAnswer[];
 }

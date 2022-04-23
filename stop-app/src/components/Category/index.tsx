@@ -1,50 +1,45 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Form, FormControl, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import IAnswer from '../../interfaces/IAnswer.interface';
 import ICategory from '../../interfaces/ICategory.interface';
 import { RootState } from '../../store';
-import { setAnswers } from '../../store/answers.slice';
+import { sendActualRespost } from '../../store/turn.slice';
 import './style.scss';
 
 interface CategoryProps {
   category: ICategory;
 }
 
-const answerListType: IAnswer[] = [];
-
 export default function Category(props: CategoryProps) {
   const [state, setState] = useState({
-    answerList: answerListType,
     answerInput: '',
     answerBeforePoints: '',
     setedPoints: 0,
   });
+  const { answerInput, answerBeforePoints, setedPoints } = state;
 
   const { category } = props;
 
   const dispatch = useDispatch();
 
-  const turn = useSelector((s: RootState) => s.turn.turn);
+  const { turnType } = useSelector((s: RootState) => s.turn);
 
   useEffect(() => {
-    if (turn === 'stop') {
+    if (turnType === 'stop') {
+      dispatch(
+        sendActualRespost({
+          category: category.category,
+          score: 0,
+          answer: answerInput,
+        }),
+      );
       setState({
         ...state,
-        answerBeforePoints: answerInput,
+        answerBeforePoints: state.answerInput,
         answerInput: '',
       });
     }
-    if (turn === 'sum') {
-      setState({
-        ...state,
-        answerList: [...answerList, { answer: answerBeforePoints, score: setedPoints }],
-        answerBeforePoints: '',
-        setedPoints: 0,
-      });
-      dispatch(setAnswers({ category, answers: answerList }));
-    }
-  }, [turn]);
+  }, [turnType]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -60,34 +55,43 @@ export default function Category(props: CategoryProps) {
       ...state,
       [name]: value,
     });
+    dispatch(
+      sendActualRespost({
+        category: category.category,
+        score: value,
+        answer: answerBeforePoints,
+      }),
+    );
   };
 
-  const { answerList, answerInput, answerBeforePoints, setedPoints } = state;
   return (
     <div className="category">
       <div className="category-title">
         <h4>{category.category}</h4>
       </div>
       <div className="category-scrolling-box">
-
         <div className="category-answer-list">
-          {answerList.map(({ answer, score }) => (
+          {category.answers.map(({ answer, score }) => (
             <div
               key={`${answer}_key_number_${Math.random() * 100}`}
               className="category-answer-list-item "
             >
               <h5 className="category-answer-list-item-answer">{answer}</h5>
-              <h5 className={
-                `category-answer-list-item-score ${Number(score) === 0 ? 'zero' : ''}`
-              }>{score}</h5>
+              <h5
+                className={`category-answer-list-item-score ${
+                  Number(score) === 0 ? 'zero' : ''
+                }`}
+              >
+                {score}
+              </h5>
             </div>
           ))}
         </div>
-        {turn === 'stop' && (
+        {turnType === 'stop' && (
           <div className="category-answer-unseted-points">
             {answerBeforePoints.length > 0 && <h4>{answerBeforePoints}</h4>}
             <Form.Select
-              className='category-answer-unseted-points-select'
+              className="category-answer-unseted-points-select"
               name="setedPoints"
               size="sm"
               value={setedPoints}
@@ -99,7 +103,7 @@ export default function Category(props: CategoryProps) {
             </Form.Select>
           </div>
         )}
-        {turn !== 'stop' && (
+        {turnType !== 'stop' && (
           <div className="category-input-container container">
             <InputGroup className="mb-3">
               <FormControl

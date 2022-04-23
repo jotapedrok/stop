@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IAnswerList } from '../interfaces/IAnswer.interface';
+import ICategory from '../interfaces/ICategory.interface';
 
-const initialAnswersArray: IAnswerList[] = [];
+const initialAnswersArray: ICategory[] = [];
 
 const answers = createSlice({
   name: 'answers',
