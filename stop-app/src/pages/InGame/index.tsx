@@ -127,6 +127,7 @@ export default function InGame() {
         <InputGroup className="mb-1">
           <FormControl
             className="in-game-add-category-container-input"
+            value={state.addCategoryInput}
             name="addCategoryInput"
             placeholder="Add Category"
             aria-label="Add Category"

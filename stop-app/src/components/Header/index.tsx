@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { reset } from '../../store/score.slice';
@@ -16,6 +16,7 @@ export default function Header() {
   const score = useSelector((state: RootState) => state.score.scores);
 
   const location = useLocation();
+  const navigate = useNavigate();
   return (
     <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
       <Container>
@@ -53,6 +54,7 @@ export default function Header() {
                     dispatch(onReset());
                     dispatch(categoriesOnExit());
                     dispatch(userNameOnExit());
+                    navigate('/');
                   }}
                   className="btn"
                   as="button"
