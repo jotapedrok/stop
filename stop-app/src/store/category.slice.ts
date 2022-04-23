@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import ICategory from '../interfaces/ICategory.interface';
 
-const CategoriesArray: ICategory[] = [];
+const initialCategories: ICategory[] = [];
 
 const category = createSlice({
   name: 'category',
 
   initialState: {
-    categories: CategoriesArray,
+    categories: initialCategories,
   },
 
   reducers: {
@@ -22,13 +22,18 @@ const category = createSlice({
       );
       if (!found) {
         const newCategory = [...state.categories, payload];
-        console.log('newCategory', newCategory);
         state.categories = newCategory;
       }
     },
 
     reset(state) {
       state.categories = [];
+    },
+
+    removeAllAnswers(state) {
+      state.categories.forEach(c => {
+        c.answers = [];
+      });
     },
 
     addAnswers(state, { payload }) {
@@ -41,9 +46,19 @@ const category = createSlice({
         state.categories[i].answers.push({ score, answer });
       }
     },
+
+    categoriesOnExit(state) {
+      state.categories = initialCategories;
+    },
   },
 });
 
 export default category.reducer;
-export const { setCategories, reset, addCategory, addAnswers } =
-  category.actions;
+export const {
+  setCategories,
+  reset,
+  addCategory,
+  addAnswers,
+  removeAllAnswers,
+  categoriesOnExit,
+} = category.actions;

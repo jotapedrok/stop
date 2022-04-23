@@ -59,6 +59,13 @@ const turn = createSlice({
 
     sendTurnResposts(state) {
       state.turns.push(state.actualTurn);
+      state.actualTurn = { turn: state.actualTurn.turn + 1, answers: [] };
+    },
+
+    onReset(state) {
+      state.actualTurn = initalActualTurn;
+      state.turnType = 'default';
+      state.turns = initalTurns;
     },
   },
 });
@@ -70,5 +77,6 @@ export const {
   setSum,
   sendActualRespost,
   sendTurnResposts,
+  onReset,
 } = turn.actions;
 export type { IAnswerTurn, ITurns };

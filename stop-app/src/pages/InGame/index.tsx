@@ -8,6 +8,7 @@ import { addAnswers, addCategory } from '../../store/category.slice';
 import { sendTurnResposts, setStop, setSum } from '../../store/turn.slice';
 import { increment } from '../../store/score.slice';
 import './style.scss';
+import TurnList from '../../components/TurnsList';
 
 export default function InGame() {
   const [state, setState] = useState({
@@ -106,6 +107,9 @@ export default function InGame() {
             <Category category={category} />
           </Carousel.Item>
         ))}
+        <Carousel.Item>
+          <TurnList />
+        </Carousel.Item>
       </Carousel>
       <div className="in-game-buttons-container container">
         {turnType !== 'stop' && (

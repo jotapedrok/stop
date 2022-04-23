@@ -11,8 +11,12 @@ const user = createSlice({
     setUserName(state, { payload }) {
       state.userName = payload;
     },
+
+    userNameOnExit(state) {
+      state.userName = '';
+    },
   },
 });
 
 export default user.reducer;
-export const { setUserName } = user.actions;
+export const { setUserName, userNameOnExit } = user.actions;

@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { reset } from '../../store/score.slice';
 import { RootState } from '../../store';
 import './style.scss';
+import { categoriesOnExit, removeAllAnswers } from '../../store/category.slice';
+import { onReset } from '../../store/turn.slice';
+import { userNameOnExit } from '../../store/user.slice';
 
 // interface HeaderProps {}
 
@@ -30,25 +33,36 @@ export default function Header() {
             {location.pathname === '/game' && (
               <Nav.Item>
                 <Nav.Link
-                  onClick={() => dispatch(reset())}
+                  onClick={() => {
+                    dispatch(reset());
+                    dispatch(removeAllAnswers());
+                    dispatch(onReset());
+                  }}
                   className="btn"
                   as="button"
                 >
-                  Recomeçar
+                  Restart
                 </Nav.Link>
               </Nav.Item>
             )}
             {location.pathname === '/game' && (
               <Nav.Item>
-                <Nav.Link className="btn" as="button">
-                  Sair
+                <Nav.Link
+                  onClick={() => {
+                    dispatch(reset());
+                    dispatch(onReset());
+                    dispatch(categoriesOnExit());
+                    dispatch(userNameOnExit());
+                  }}
+                  className="btn"
+                  as="button"
+                >
+                  Exit
                 </Nav.Link>
               </Nav.Item>
             )}
             <Nav.Item>
-              <Nav.Link href="https://jotapedrok.github.io">
-                Conheça Jota Aguiar
-              </Nav.Link>
+              <Nav.Link href="https://jotapedrok.github.io">About</Nav.Link>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
