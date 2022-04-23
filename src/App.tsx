@@ -10,8 +10,8 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/game" element={<InGame />} />
+        <Route path="/stop" element={<HomePage />} />
+        <Route path="/stop/game" element={<InGame />} />
         <Route
           path="*"
           element={<h1 style={{ color: 'red' }}>OPS... PAGE NOT FOUND!</h1>}
