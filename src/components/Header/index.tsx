@@ -56,7 +56,7 @@ export default function Header() {
                     dispatch(onReset());
                     dispatch(categoriesOnExit());
                     dispatch(userNameOnExit());
-                    navigate('/');
+                    navigate('/stop');
                   }}
                   className="btn"
                   as="button"

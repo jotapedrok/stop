@@ -69,7 +69,7 @@ export default function InGame() {
   useEffect(() => {
     const stopUsername = localStorage.getItem('stopUsername');
     if (!stopUsername) {
-      navigation('/');
+      navigation('/stop');
     } else {
       getFromLocalStorage(stopUsername);
     }

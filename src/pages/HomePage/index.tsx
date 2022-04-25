@@ -38,7 +38,7 @@ export default function HomePage() {
     const LSUsername = localStorage.getItem('stopUsername');
     if (LSUsername) {
       dispatch(setUserName(LSUsername));
-      navigate('/game');
+      navigate('/stop/game');
     }
   }, []);
 
@@ -167,7 +167,7 @@ export default function HomePage() {
             e.preventDefault();
             dispatch(setCategories(categories));
             dispatch(setUserName(usernameInput));
-            navigate('/game');
+            navigate('/stop/game');
             localStorage.setItem('stopUsername', usernameInput);
             localStorage.setItem(
               'stopDatas',
