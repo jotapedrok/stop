@@ -160,6 +160,11 @@ export default function HomePage() {
             dispatch(setCategories(categories));
             dispatch(setUserName(usernameInput));
             navigate('/game');
+            localStorage.setItem('stopUsername', usernameInput);
+            localStorage.setItem(
+              'stopDatas',
+              JSON.stringify({ categories, turns: [] }),
+            );
           }}
         >
           Play
