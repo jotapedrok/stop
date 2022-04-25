@@ -15,6 +15,10 @@ const score = createSlice({
     reset(state) {
       state.scores = 0;
     },
+
+    setScores(state, { payload }) {
+      state.scores = payload;
+    },
   },
 });
 

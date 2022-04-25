@@ -50,6 +50,8 @@ export default function Header() {
               <Nav.Item>
                 <Nav.Link
                   onClick={() => {
+                    localStorage.removeItem('stopUsername');
+                    localStorage.removeItem('stopDatas');
                     dispatch(reset());
                     dispatch(onReset());
                     dispatch(categoriesOnExit());

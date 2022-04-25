@@ -4,11 +4,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Category from '../../components/Category';
 import { RootState } from '../../store';
-import { addAnswers, addCategory } from '../../store/category.slice';
-import { sendTurnResposts, setStop, setSum } from '../../store/turn.slice';
+import {
+  addAnswers,
+  addCategory,
+  setCategories,
+} from '../../store/category.slice';
+import {
+  ITurns,
+  sendTurnResposts,
+  setStop,
+  setSum,
+  setTurns,
+} from '../../store/turn.slice';
 import { increment } from '../../store/score.slice';
 import './style.scss';
 import TurnList from '../../components/TurnsList';
+import { setUserName } from '../../store/user.slice';
+import ICategory from '../../interfaces/ICategory.interface';
+
+interface ILocalStorageDatas {
+  turns: ITurns[];
+  scores: number;
+  categories: ICategory[];
+}
 
 export default function InGame() {
   const [state, setState] = useState({
@@ -18,14 +36,41 @@ export default function InGame() {
 
   const userName = useSelector((s: RootState) => s.user.userName);
   const categories = useSelector((s: RootState) => s.categories.categories);
+  const scores = useSelector((s: RootState) => s.score.scores);
   const { actualTurn, turnType, turns } = useSelector((s: RootState) => s.turn);
 
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
+  const getFromLocalStorage = (stopUsername: string | null) => {
+    const getDatas = localStorage.getItem('stopDatas');
+    const stopDatas = getDatas ? JSON.parse(getDatas) : null;
+    if (stopDatas) {
+      dispatch(setTurns(stopDatas.turns));
+      dispatch(setCategories(stopDatas.categories));
+      dispatch(setUserName(stopUsername));
+    }
+  };
+
+  const refreshLocalStorage = () => {
+    const getDatas = localStorage.getItem('stopDatas');
+    const stopDatas: ILocalStorageDatas | null = getDatas
+      ? JSON.parse(getDatas)
+      : null;
+    if (stopDatas) {
+      stopDatas.scores = scores;
+      stopDatas.turns = turns;
+      stopDatas.categories = categories;
+      localStorage.setItem('stopDatas', JSON.stringify(stopDatas));
+    }
+  };
+
   useEffect(() => {
-    if (userName.length < 1 || categories.length < 1) {
+    const stopUsername = localStorage.getItem('stopUsername');
+    if (!stopUsername) {
       navigation('/');
+    } else {
+      getFromLocalStorage(stopUsername);
     }
   }, []);
 
@@ -45,14 +90,15 @@ export default function InGame() {
     e.preventDefault();
     dispatch(setSum());
     dispatch(sendTurnResposts());
-    const scores = actualTurn.answers.reduce(
+    const turnScore = actualTurn.answers.reduce(
       (acc, answer) => Number(answer.score) + acc,
       0,
     );
-    dispatch(increment(Number(scores)));
+    dispatch(increment(Number(turnScore)));
     actualTurn.answers.forEach(answer => {
       dispatch(addAnswers(answer));
     });
+    refreshLocalStorage();
   };
 
   const calculateTurns = () => {
@@ -80,6 +126,7 @@ export default function InGame() {
       ...state,
       addCategoryInput: '',
     });
+    refreshLocalStorage();
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

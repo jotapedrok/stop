@@ -67,6 +67,10 @@ const turn = createSlice({
       state.turnType = 'default';
       state.turns = initalTurns;
     },
+
+    setTurns(state, { payload }) {
+      state.turns = payload;
+    },
   },
 });
 
@@ -78,5 +82,6 @@ export const {
   sendActualRespost,
   sendTurnResposts,
   onReset,
+  setTurns,
 } = turn.actions;
 export type { IAnswerTurn, ITurns };

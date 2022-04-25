@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { FaUserAlt } from 'react-icons/fa';
@@ -33,6 +33,14 @@ export default function HomePage() {
   };
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const LSUsername = localStorage.getItem('stopUsername');
+    if (LSUsername) {
+      dispatch(setUserName(LSUsername));
+      navigate('/game');
+    }
+  }, []);
 
   const [state, setState] = useState(initialState);
   const { hasError, usernameInput, categoryInput, categories } = state;
@@ -163,7 +171,7 @@ export default function HomePage() {
             localStorage.setItem('stopUsername', usernameInput);
             localStorage.setItem(
               'stopDatas',
-              JSON.stringify({ categories, turns: [] }),
+              JSON.stringify({ categories, turns: [], scores: 0 }),
             );
           }}
         >
