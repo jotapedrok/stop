@@ -23,4 +23,4 @@ const score = createSlice({
 });
 
 export default score.reducer;
-export const { increment, reset } = score.actions;
+export const { increment, reset, setScores } = score.actions;

@@ -16,7 +16,7 @@ import {
   setSum,
   setTurns,
 } from '../../store/turn.slice';
-import { increment } from '../../store/score.slice';
+import { increment, setScores } from '../../store/score.slice';
 import './style.scss';
 import TurnList from '../../components/TurnsList';
 import { setUserName } from '../../store/user.slice';
@@ -42,17 +42,7 @@ export default function InGame() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
-  const getFromLocalStorage = (stopUsername: string | null) => {
-    const getDatas = localStorage.getItem('stopDatas');
-    const stopDatas = getDatas ? JSON.parse(getDatas) : null;
-    if (stopDatas) {
-      dispatch(setTurns(stopDatas.turns));
-      dispatch(setCategories(stopDatas.categories));
-      dispatch(setUserName(stopUsername));
-    }
-  };
-
-  const refreshLocalStorage = () => {
+  const refreshLocalStorage = (c: ICategory[]) => {
     const getDatas = localStorage.getItem('stopDatas');
     const stopDatas: ILocalStorageDatas | null = getDatas
       ? JSON.parse(getDatas)
@@ -60,8 +50,19 @@ export default function InGame() {
     if (stopDatas) {
       stopDatas.scores = scores;
       stopDatas.turns = turns;
-      stopDatas.categories = categories;
+      stopDatas.categories = c;
       localStorage.setItem('stopDatas', JSON.stringify(stopDatas));
+    }
+  };
+
+  const getFromLocalStorage = (stopUsername: string | null) => {
+    const getDatas = localStorage.getItem('stopDatas');
+    const stopDatas = getDatas ? JSON.parse(getDatas) : null;
+    if (stopDatas) {
+      dispatch(setTurns(stopDatas.turns));
+      dispatch(setCategories(stopDatas.categories));
+      dispatch(setUserName(stopUsername));
+      dispatch(setScores(stopDatas.scores));
     }
   };
 
@@ -73,6 +74,12 @@ export default function InGame() {
       getFromLocalStorage(stopUsername);
     }
   }, []);
+
+  useEffect(() => {
+    if (turnType === 'sum') {
+      refreshLocalStorage(categories);
+    }
+  }, [turnType]);
 
   const handleCarouselSelect = (selectedIndex: number) => {
     setState({
@@ -98,7 +105,6 @@ export default function InGame() {
     actualTurn.answers.forEach(answer => {
       dispatch(addAnswers(answer));
     });
-    refreshLocalStorage();
   };
 
   const calculateTurns = () => {
@@ -126,7 +132,15 @@ export default function InGame() {
       ...state,
       addCategoryInput: '',
     });
-    refreshLocalStorage();
+    const addNewCategory = [
+      ...categories,
+      {
+        category: state.addCategoryInput,
+        id: categories.length + 1,
+        answers: calculateTurns(),
+      },
+    ];
+    refreshLocalStorage(addNewCategory);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

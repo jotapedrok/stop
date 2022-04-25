@@ -38,6 +38,11 @@ export default function Category(props: CategoryProps) {
         answerBeforePoints: state.answerInput,
         answerInput: '',
       });
+    } else {
+      setState({
+        ...state,
+        setedPoints: 0,
+      });
     }
   }, [turnType]);
 

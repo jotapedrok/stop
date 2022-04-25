@@ -18,7 +18,10 @@ export default function TurnList() {
               0,
             );
             return (
-              <div key={`${turn.turn}_key`} className="turns-score-list-item ">
+              <div
+                key={`${turn.turn}_key_number_${Math.random() * 100}`}
+                className="turns-score-list-item "
+              >
                 <h5
                   className={`turns-score-list-item-score ${
                     Number(totalScore) === 0 ? 'zero' : ''
