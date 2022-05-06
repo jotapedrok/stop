@@ -1,22 +1,12 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
-import HomePage from './pages/HomePage';
-import './App.scss';
-import InGame from './pages/InGame';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/game" element={<InGame />} />
-        <Route
-          path="*"
-          element={<h1 style={{ color: 'red' }}>OPS... PAGE NOT FOUND!</h1>}
-        />
-      </Routes>
+      <h1>
+        ESSA PÁGINA FOI REALOCADA
+        <a href="https://my-stop-app.vercel.app/">AQUI</a>
+      </h1>
     </div>
   );
 }
