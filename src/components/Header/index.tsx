@@ -24,14 +24,14 @@ export default function Header() {
         <Navbar.Brand bsPrefix="logo-container" href="/">
           STOP
         </Navbar.Brand>
-        {location.pathname === '/stop/game' ? (
+        {location.pathname === '/game' ? (
           <Navbar.Text className="score">{score}</Navbar.Text>
         ) : (
           <div />
         )}
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav>
-            {location.pathname === '/stop/game' && (
+            {location.pathname === '/game' && (
               <Nav.Item>
                 <Nav.Link
                   onClick={() => {
@@ -46,7 +46,7 @@ export default function Header() {
                 </Nav.Link>
               </Nav.Item>
             )}
-            {location.pathname === '/stop/game' && (
+            {location.pathname === '/game' && (
               <Nav.Item>
                 <Nav.Link
                   onClick={() => {
@@ -56,7 +56,7 @@ export default function Header() {
                     dispatch(onReset());
                     dispatch(categoriesOnExit());
                     dispatch(userNameOnExit());
-                    navigate('/stop');
+                    navigate('/');
                   }}
                   className="btn"
                   as="button"
