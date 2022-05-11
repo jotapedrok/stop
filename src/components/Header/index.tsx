@@ -35,6 +35,7 @@ export default function Header() {
               <Nav.Item>
                 <Nav.Link
                   onClick={() => {
+                    localStorage.removeItem('stopDatas');
                     dispatch(reset());
                     dispatch(removeAllAnswers());
                     dispatch(onReset());
